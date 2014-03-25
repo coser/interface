@@ -10,11 +10,13 @@ class mysql_class{
 				'hostname'	=> (isset($config['hostname'])) ? $config['hostname'] : '',
 				'username'	=> (isset($config['username'])) ? $config['username'] : '',
 				'password'	=> (isset($config['password'])) ? $config['password'] : '',
-				'database'	=> (isset($config['database'])) ? $config['database'] : ''
+				'database'	=> (isset($config['database'])) ? $config['database'] : '',
+				'charset'	=> (isset($config['char_set'])) ? $config['char_set'] : '',
 			);
-			
-		$this->conn_id = @mysql_connect($this->params['hostname'], $this->params['username'], $this->params['password'], TRUE);
 
+		$this->conn_id = @mysql_connect($this->params['hostname'], $this->params['username'], $this->params['password'], TRUE);
+		@mysql_set_charset($config['char_set'], $this->conn_id);
+		
 		if(!$this->db_select()){
 			$this->conn_id = false;
 		}
@@ -87,7 +89,11 @@ class mysql_class{
 	}
 	
 	public  function getAll($resouce){
-		return mysql_fetch_array($resouce, MYSQL_ASSOC);
+		$result = array();
+		while ($row = mysql_fetch_array($resouce, MYSQL_ASSOC)){
+			array_push($result,$row); 
+		}
+		return $result;
 	}
 	
 	

@@ -1,5 +1,6 @@
 <?php
 
+//接口打印结果集 通用函数
 function print_result($code,$data = array(),$msg = ''){
 	$result = array();
 	
@@ -32,7 +33,7 @@ function print_result($code,$data = array(),$msg = ''){
 	exit;
 }
 
-
+//数组urlencode
 function array_urlencode($array){
 	if(is_string($array)){
 		return urlencode($array);
@@ -49,7 +50,7 @@ function array_urlencode($array){
 
 
 
-
+//xss过滤
 function remove_xss($val) {  
    
    $val = preg_replace('/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/', '', $val);  
@@ -95,17 +96,13 @@ function remove_xss($val) {
 }
 
 
-
+//获取字符串长度，$str必须是utf8编码
 function strcount($str){
-	$tmp = @iconv('gbk', 'utf-8', $str);
-	if(!empty($tmp)){
-		$str = $tmp;
-	}
 	preg_match_all('/./us', $str, $match);
 	return count($match[0]);
 }
 
-
+//获取db实例  
 function getDB($database){
 	static $db = null;
 	if($db === null && file_exists(ROOTPATH."./config/database.php")){
@@ -119,7 +116,7 @@ function getDB($database){
 	return $db;
 }
 
-
+//解密函数
 function _decrypt($encryptText,$key = null){
 	$cryptText = base64_decode($encryptText);
 	$ivSize = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
@@ -129,7 +126,7 @@ function _decrypt($encryptText,$key = null){
 
 }
 
-
+//加密函数
 function _encrypt($plain_array,$key = null){
 	if(!is_array($plain_array)){
 		$plain_array = array($plain_array);	
@@ -142,6 +139,7 @@ function _encrypt($plain_array,$key = null){
 
 }
 
+//sign验证
 function checksign($params){
 	if(!isset($params['sign'])){
 		return false;

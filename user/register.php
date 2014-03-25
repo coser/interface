@@ -38,6 +38,7 @@ if($db->num_rows($resouce) > 0){
 	
 }
 
+//token 算法
 $token = strtoupper(md5(COSSIGN.$params['email'].md5($params['password'])));
 
 $resouce = $db->query("INSERT INTO user (email,nickname,password,token,createtime) VAlUES(:email,:nickname,:password,:token,:createtime)",

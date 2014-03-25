@@ -10,7 +10,7 @@ if(!$db = getDB('user')){
 	
 }
 
-$resouce = $db->query("SELECT * FROM user WHERE token=:token and password=:password",array('token'=>$params['P00001']));
+$resouce = $db->query("SELECT * FROM user WHERE token=:token",array('token'=>$params['P00001']));
 
 if($db->num_rows($resouce) > 0){
 	print_result('A00000',array('userinfo'=>$db->getRow($resouce)));
